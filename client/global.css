@@ -60,13 +60,13 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 217.2 32.6% 17.5%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 217.2 32.6% 17.5%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 217.2 32.6% 17.5%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
@@ -116,5 +116,44 @@
   code {
     overflow-x: auto;
     white-space: pre;
+  }
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.7);
+}
+
+/* Smooth animations */
+@layer utilities {
+  .animate-camera-flash {
+    animation: cameraFlash 0.3s ease-out;
+  }
+
+  @keyframes cameraFlash {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .backdrop-blur-xl {
+    backdrop-filter: blur(20px);
   }
 }
