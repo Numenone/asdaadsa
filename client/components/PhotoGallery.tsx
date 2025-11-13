@@ -144,9 +144,12 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
                 onClick={() => setCurrentIndex(index)}
               >
                 <img
-                  src={photo}
+                  src={photo.url}
                   alt={`Thumbnail ${index + 1}`}
                   className="w-20 h-20 sm:w-24 sm:h-24 object-cover"
+                  style={{
+                    filter: generateCSSFilters(photo.filters),
+                  }}
                 />
 
                 {/* Hover Actions */}
