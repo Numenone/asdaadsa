@@ -21,6 +21,11 @@ export const uploadPhoto = async (
   file: Blob,
   filename: string
 ): Promise<string | null> => {
+  if (!supabase) {
+    console.warn("Supabase not configured. Using local storage fallback.");
+    return null;
+  }
+
   try {
     const { data, error } = await supabase.storage
       .from("photos")
@@ -46,6 +51,10 @@ export const uploadPhoto = async (
 };
 
 export const deletePhoto = async (filepath: string): Promise<boolean> => {
+  if (!supabase) {
+    return false;
+  }
+
   try {
     const { error } = await supabase.storage.from("photos").remove([filepath]);
 
@@ -62,6 +71,10 @@ export const deletePhoto = async (filepath: string): Promise<boolean> => {
 };
 
 export const listPhotos = async (): Promise<string[]> => {
+  if (!supabase) {
+    return [];
+  }
+
   try {
     const { data, error } = await supabase.storage
       .from("photos")
@@ -80,7 +93,7 @@ export const listPhotos = async (): Promise<string[]> => {
       .map((file) => {
         const {
           data: { publicUrl },
-        } = supabase.storage.from("photos").getPublicUrl(`public/${file.name}`);
+        } = supabase!.storage.from("photos").getPublicUrl(`public/${file.name}`);
         return publicUrl;
       })
       .filter((url) => url.length > 0);
