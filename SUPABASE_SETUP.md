@@ -67,6 +67,7 @@ VITE_SUPABASE_ANON_KEY=your_anon_key_here
 ## 7. Deploy to Vercel
 
 ### Prerequisites
+
 - GitHub account
 - Vercel account
 
@@ -96,15 +97,18 @@ VITE_SUPABASE_ANON_KEY=your_anon_key_here
 ## Troubleshooting
 
 ### Photos not uploading
+
 - Check that the `photos` bucket exists and is public
 - Verify your Supabase credentials in .env
 - Check browser console for error messages
 
 ### CORS errors
+
 - Ensure your Supabase bucket is public
 - Check bucket policies allow public access
 
 ### Photos not persisting
+
 - If Supabase is not configured, photos are stored in browser localStorage
 - This data will be lost if you clear browser storage
 - Set up Supabase for persistent storage
@@ -112,6 +116,7 @@ VITE_SUPABASE_ANON_KEY=your_anon_key_here
 ## Local Development with Fallback
 
 The app works with or without Supabase:
+
 - **With Supabase**: Photos are stored in the cloud and persist across devices
 - **Without Supabase**: Photos are stored in browser localStorage (current session only)
 

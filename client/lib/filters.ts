@@ -88,7 +88,7 @@ export const generateCSSFilters = (filters: FilterState): string => {
 // Apply filters to image using Canvas API
 export const applyFiltersToImage = async (
   imageSrc: string,
-  filters: FilterState
+  filters: FilterState,
 ): Promise<string> => {
   return new Promise((resolve) => {
     const img = new Image();

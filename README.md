@@ -63,6 +63,7 @@ For cloud storage of photos:
 
 4. **Set Environment Variables**
    - Create `.env.local` file in project root:
+
    ```
    VITE_SUPABASE_URL=https://your-project-id.supabase.co
    VITE_SUPABASE_ANON_KEY=your_anon_key_here
@@ -116,6 +117,7 @@ pnpm build
 ### Deploy to Vercel
 
 1. **Push to GitHub**
+
    ```bash
    git add .
    git commit -m "Initial commit"
@@ -157,6 +159,7 @@ pnpm build
 ## 📱 Features Breakdown
 
 ### Camera Capture
+
 - Live webcam preview
 - Instant capture with one click
 - 3-second and 5-second countdown options
@@ -165,6 +168,7 @@ pnpm build
 - Shows upload progress indicator
 
 ### Advanced Photo Filters
+
 - **12 Professional Filters**:
   - Negativo (inverted colors)
   - Opacidade (transparency control)
@@ -185,6 +189,7 @@ pnpm build
 See [FILTERS_GUIDE.md](./FILTERS_GUIDE.md) for detailed filter examples and combinations.
 
 ### Photo Gallery
+
 - Auto-scrolling carousel every 4 seconds
 - Click thumbnails to select photos
 - Download individual photos with applied filters
@@ -195,6 +200,7 @@ See [FILTERS_GUIDE.md](./FILTERS_GUIDE.md) for detailed filter examples and comb
 - Filters visible in gallery preview
 
 ### Responsive Design
+
 - Mobile-first approach
 - Optimized for:
   - Mobile phones (375px+)
@@ -214,27 +220,30 @@ See [FILTERS_GUIDE.md](./FILTERS_GUIDE.md) for detailed filter examples and comb
 ## 🐛 Troubleshooting
 
 ### Webcam not working
+
 - Check browser permissions
 - Allow camera access when prompted
 - Try refreshing the page
 - Ensure HTTPS on production
 
 ### Photos not uploading
+
 - Verify Supabase credentials in .env
 - Check Supabase bucket exists and is public
 - Check browser console for errors
 - App falls back to localStorage automatically
 
 ### Build errors
+
 - Delete `node_modules` and `pnpm-lock.yaml`
 - Run `pnpm install`
 - Run `pnpm build`
 
 ## 📝 Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| VITE_SUPABASE_URL | Supabase project URL | No (optional) |
+| Variable               | Description            | Required      |
+| ---------------------- | ---------------------- | ------------- |
+| VITE_SUPABASE_URL      | Supabase project URL   | No (optional) |
 | VITE_SUPABASE_ANON_KEY | Supabase anonymous key | No (optional) |
 
 ## 📄 Available Scripts
@@ -253,6 +262,7 @@ pnpm format.fix   # Format code with Prettier
 ### Change Theme Colors
 
 Edit `client/global.css` to modify:
+
 - Primary colors (blue/purple)
 - Dark mode background
 - Accent colors
@@ -266,10 +276,9 @@ Edit `client/global.css` to modify:
 ### Modify Countdown Times
 
 Edit `CameraCapture.tsx` button handlers:
+
 ```tsx
-<button onClick={() => startCountdown(10)}>
-  10s Timer
-</button>
+<button onClick={() => startCountdown(10)}>10s Timer</button>
 ```
 
 ## 📊 Performance
@@ -308,6 +317,7 @@ This project is open source and available under the MIT License.
 ## 💬 Support
 
 For issues or questions:
+
 1. Check the troubleshooting section above
 2. Review [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)
 3. Check browser console for error messages

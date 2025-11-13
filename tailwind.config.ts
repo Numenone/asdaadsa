@@ -96,7 +96,7 @@ export default {
             opacity: "0.5",
           },
         },
-        "float": {
+        float: {
           "0%, 100%": {
             transform: "translateY(0px)",
           },
@@ -110,7 +110,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "camera-flash": "camera-flash 0.3s ease-out",
         "pulse-slow": "pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "float": "float 3s ease-in-out infinite",
+        float: "float 3s ease-in-out infinite",
       },
     },
   },

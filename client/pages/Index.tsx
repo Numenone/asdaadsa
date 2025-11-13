@@ -2,7 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import CameraCapture from "@/components/CameraCapture";
 import PhotoGallery from "@/components/PhotoGallery";
-import { listPhotos, deletePhoto as deletePhotoFromSupabase } from "@/lib/supabase";
+import {
+  listPhotos,
+  deletePhoto as deletePhotoFromSupabase,
+} from "@/lib/supabase";
 import { Camera } from "lucide-react";
 import {
   StoredPhoto,
@@ -27,7 +30,20 @@ export default function Index() {
         // Convert URLs to StoredPhoto objects
         const storedPhotos: StoredPhoto[] = photoUrls.map((url) => ({
           url,
-          filters: { negativo: 0, opacidade: 100, saturacao: 100, brilho: 100, contraste: 100, desfoque: 0, escalacinza: 0, sepia: 0, vermelho: 0, verde: 0, azul: 0, amarelo: 0 },
+          filters: {
+            negativo: 0,
+            opacidade: 100,
+            saturacao: 100,
+            brilho: 100,
+            contraste: 100,
+            desfoque: 0,
+            escalacinza: 0,
+            sepia: 0,
+            vermelho: 0,
+            verde: 0,
+            azul: 0,
+            amarelo: 0,
+          },
           timestamp: Date.now(),
         }));
 
@@ -51,7 +67,20 @@ export default function Index() {
       setPhotos((prevPhotos) => {
         const newPhoto: StoredPhoto = {
           url: photoUrl,
-          filters: filters || { negativo: 0, opacidade: 100, saturacao: 100, brilho: 100, contraste: 100, desfoque: 0, escalacinza: 0, sepia: 0, vermelho: 0, verde: 0, azul: 0, amarelo: 0 },
+          filters: filters || {
+            negativo: 0,
+            opacidade: 100,
+            saturacao: 100,
+            brilho: 100,
+            contraste: 100,
+            desfoque: 0,
+            escalacinza: 0,
+            sepia: 0,
+            vermelho: 0,
+            verde: 0,
+            azul: 0,
+            amarelo: 0,
+          },
           timestamp: Date.now(),
         };
         const updatedPhotos = [newPhoto, ...prevPhotos];
@@ -60,7 +89,7 @@ export default function Index() {
         return updatedPhotos;
       });
     },
-    []
+    [],
   );
 
   const handleDeletePhoto = useCallback(
@@ -76,7 +105,7 @@ export default function Index() {
       // Try to delete from Supabase
       if (
         photoToDelete.url.includes(
-          (import.meta.env.VITE_SUPABASE_URL || "").split("/").pop() || ""
+          (import.meta.env.VITE_SUPABASE_URL || "").split("/").pop() || "",
         )
       ) {
         const filename = photoToDelete.url.split("/").pop();
@@ -85,7 +114,7 @@ export default function Index() {
         }
       }
     },
-    [photos]
+    [photos],
   );
 
   return (

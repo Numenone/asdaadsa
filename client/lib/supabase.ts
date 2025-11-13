@@ -19,7 +19,7 @@ export const isSupabaseConfigured = () => !!supabase;
 // Helper functions for photo operations
 export const uploadPhoto = async (
   file: Blob,
-  filename: string
+  filename: string,
 ): Promise<string | null> => {
   if (!supabase) {
     console.warn("Supabase not configured. Using local storage fallback.");
@@ -93,7 +93,9 @@ export const listPhotos = async (): Promise<string[]> => {
       .map((file) => {
         const {
           data: { publicUrl },
-        } = supabase!.storage.from("photos").getPublicUrl(`public/${file.name}`);
+        } = supabase!.storage
+          .from("photos")
+          .getPublicUrl(`public/${file.name}`);
         return publicUrl;
       })
       .filter((url) => url.length > 0);

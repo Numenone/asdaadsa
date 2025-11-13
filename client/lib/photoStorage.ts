@@ -7,7 +7,9 @@ export interface StoredPhoto {
 }
 
 // Convert old string[] to new StoredPhoto[]
-export const migratePhotos = (photos: (string | StoredPhoto)[]): StoredPhoto[] => {
+export const migratePhotos = (
+  photos: (string | StoredPhoto)[],
+): StoredPhoto[] => {
   return photos.map((photo) => {
     if (typeof photo === "string") {
       return {
@@ -30,7 +32,7 @@ export const loadPhotosFromStorage = (): StoredPhoto[] => {
   try {
     const saved = localStorage.getItem("photos");
     if (!saved) return [];
-    
+
     const parsed = JSON.parse(saved);
     // Handle migration from old format
     if (Array.isArray(parsed) && parsed.length > 0) {

@@ -5,6 +5,7 @@ This guide will help you deploy your SnapShot app to production with Supabase an
 ## Prerequisites
 
 Before starting, ensure you have:
+
 - GitHub account (for version control)
 - Supabase account (free tier available)
 - Vercel account (free tier available)
@@ -105,6 +106,7 @@ On the import screen, configure:
 **Framework Preset**: Select "Other" (since it's a custom setup)
 
 **Build Settings**:
+
 - **Build Command**: `pnpm build`
 - **Output Directory**: `dist`
 - **Install Command**: `pnpm install`
@@ -139,6 +141,7 @@ Click **Add New** and add these two variables:
 ### 4.2 Test File Upload
 
 After capturing a photo:
+
 - Click download icon to download the photo
 - Check that photo was uploaded to Supabase (optional):
   1. Go to Supabase Dashboard
@@ -182,14 +185,17 @@ Your app is now set up for continuous deployment:
 ### Build Fails on Vercel
 
 **Error**: "pnpm: command not found"
+
 - Solution: Add to Environment Variables → **ENABLE_PNPM=true**
 
 **Error**: "Supabase client error"
+
 - Solution: Verify environment variables are correctly set in Vercel
 - Check Settings → Environment Variables
 
 **Error**: "Photos not uploading"
-- Solution: 
+
+- Solution:
   1. Check Supabase bucket is public
   2. Verify bucket policies are set
   3. Check environment variables
@@ -197,15 +203,18 @@ Your app is now set up for continuous deployment:
 ### Webcam Issues on Production
 
 **Issue**: Camera not working
+
 - Solution: Ensure you're using HTTPS (Vercel provides this by default)
 - Some browsers require HTTPS for camera access
 
 **Issue**: Permission denied
+
 - Solution: Clear browser cache and cookies, reload page, allow camera access
 
 ### Photos Not Persisting
 
 **Issue**: Photos disappear after refresh
+
 - Cause: Supabase not configured properly
 - Check browser console for errors
 - Verify environment variables in Vercel
