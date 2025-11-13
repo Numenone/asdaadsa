@@ -75,7 +75,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
 
   // Filter out invalid photos
   const validPhotos = displayPhotos.filter(
-    (photo) => photo && photo.url && typeof photo.url === "string"
+    (photo) => photo && photo.url && typeof photo.url === "string",
   );
 
   if (validPhotos.length === 0) {

@@ -47,7 +47,7 @@ export const loadPhotosFromStorage = (): StoredPhoto[] => {
       // Filter out invalid items
       return parsed.filter(
         (item): item is StoredPhoto =>
-          item && typeof item === "object" && typeof item.url === "string"
+          item && typeof item === "object" && typeof item.url === "string",
       );
     }
     return [];
