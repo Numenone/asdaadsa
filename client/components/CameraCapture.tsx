@@ -168,6 +168,9 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onPhotoCapture }) => {
 
       {/* Controls */}
       <div className="w-full max-w-2xl space-y-6">
+        {/* Filter Controls */}
+        <FilterControls filters={filters} onFilterChange={setFilters} />
+
         {/* Capture Buttons */}
         <div className="flex gap-4 justify-center flex-wrap">
           <button
