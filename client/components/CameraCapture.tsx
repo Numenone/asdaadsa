@@ -3,19 +3,28 @@ import Webcam from "react-webcam";
 import { Camera, Download, RotateCw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { uploadPhoto } from "@/lib/supabase";
+import FilterControls from "./FilterControls";
+import {
+  FilterState,
+  DEFAULT_FILTERS,
+  generateCSSFilters,
+  applyFiltersToImage,
+} from "@/lib/filters";
 
 interface CameraCaptureProps {
-  onPhotoCapture: (photoUrl: string) => void;
+  onPhotoCapture: (photoUrl: string, filters?: FilterState) => void;
 }
 
 const CameraCapture: React.FC<CameraCaptureProps> = ({ onPhotoCapture }) => {
   const webcamRef = useRef<Webcam>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [isCountdownActive, setIsCountdownActive] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [cameraFlash, setCameraFlash] = useState(false);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
 
   // Handle countdown
   useEffect(() => {
