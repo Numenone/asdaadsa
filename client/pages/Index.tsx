@@ -4,9 +4,15 @@ import CameraCapture from "@/components/CameraCapture";
 import PhotoGallery from "@/components/PhotoGallery";
 import { listPhotos, deletePhoto as deletePhotoFromSupabase } from "@/lib/supabase";
 import { Camera } from "lucide-react";
+import {
+  StoredPhoto,
+  savePhotosToStorage,
+  loadPhotosFromStorage,
+} from "@/lib/photoStorage";
+import { FilterState } from "@/lib/filters";
 
 export default function Index() {
-  const [photos, setPhotos] = useState<string[]>([]);
+  const [photos, setPhotos] = useState<StoredPhoto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,15 +23,21 @@ export default function Index() {
         setIsLoading(true);
         setError(null);
         const photoUrls = await listPhotos();
-        setPhotos(photoUrls);
+
+        // Convert URLs to StoredPhoto objects
+        const storedPhotos: StoredPhoto[] = photoUrls.map((url) => ({
+          url,
+          filters: { negativo: 0, opacidade: 100, saturacao: 100, brilho: 100, contraste: 100, desfoque: 0, escalacinza: 0, sepia: 0, vermelho: 0, verde: 0, azul: 0, amarelo: 0 },
+          timestamp: Date.now(),
+        }));
+
+        setPhotos(storedPhotos);
       } catch (err) {
         console.error("Error loading photos:", err);
         setError("Failed to load photos. Using local storage only.");
         // Try loading from localStorage as fallback
-        const savedPhotos = localStorage.getItem("photos");
-        if (savedPhotos) {
-          setPhotos(JSON.parse(savedPhotos));
-        }
+        const savedPhotos = loadPhotosFromStorage();
+        setPhotos(savedPhotos);
       } finally {
         setIsLoading(false);
       }
@@ -35,11 +47,16 @@ export default function Index() {
   }, []);
 
   const handlePhotoCapture = useCallback(
-    (photoUrl: string) => {
+    (photoUrl: string, filters?: FilterState) => {
       setPhotos((prevPhotos) => {
-        const updatedPhotos = [photoUrl, ...prevPhotos];
+        const newPhoto: StoredPhoto = {
+          url: photoUrl,
+          filters: filters || { negativo: 0, opacidade: 100, saturacao: 100, brilho: 100, contraste: 100, desfoque: 0, escalacinza: 0, sepia: 0, vermelho: 0, verde: 0, azul: 0, amarelo: 0 },
+          timestamp: Date.now(),
+        };
+        const updatedPhotos = [newPhoto, ...prevPhotos];
         // Save to localStorage as backup
-        localStorage.setItem("photos", JSON.stringify(updatedPhotos));
+        savePhotosToStorage(updatedPhotos);
         return updatedPhotos;
       });
     },
@@ -52,17 +69,17 @@ export default function Index() {
 
       setPhotos((prevPhotos) => {
         const updatedPhotos = prevPhotos.filter((_, i) => i !== index);
-        localStorage.setItem("photos", JSON.stringify(updatedPhotos));
+        savePhotosToStorage(updatedPhotos);
         return updatedPhotos;
       });
 
       // Try to delete from Supabase
       if (
-        photoToDelete.includes(
+        photoToDelete.url.includes(
           (import.meta.env.VITE_SUPABASE_URL || "").split("/").pop() || ""
         )
       ) {
-        const filename = photoToDelete.split("/").pop();
+        const filename = photoToDelete.url.split("/").pop();
         if (filename) {
           await deletePhotoFromSupabase(`public/${filename}`);
         }
