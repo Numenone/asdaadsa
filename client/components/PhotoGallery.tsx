@@ -40,8 +40,18 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
     };
   }, [displayPhotos.length]);
 
-  // Scroll to current photo
+  // Scroll to current photo and validate currentIndex
   useEffect(() => {
+    if (displayPhotos.length === 0) {
+      setCurrentIndex(0);
+      return;
+    }
+
+    // Ensure currentIndex is valid
+    if (currentIndex >= displayPhotos.length) {
+      setCurrentIndex(0);
+    }
+
     if (scrollContainerRef.current) {
       const container = scrollContainerRef.current;
       const scrollLeft = currentIndex * (container.offsetWidth / 3);
@@ -50,7 +60,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
         behavior: "smooth",
       });
     }
-  }, [currentIndex]);
+  }, [currentIndex, displayPhotos.length]);
 
   const downloadPhoto = (photoUrl: string) => {
     const link = document.createElement("a");
