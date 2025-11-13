@@ -10,16 +10,21 @@ export interface StoredPhoto {
 export const migratePhotos = (
   photos: (string | StoredPhoto)[],
 ): StoredPhoto[] => {
-  return photos.map((photo) => {
-    if (typeof photo === "string") {
-      return {
-        url: photo,
-        filters: DEFAULT_FILTERS,
-        timestamp: Date.now(),
-      };
-    }
-    return photo;
-  });
+  return photos
+    .filter((photo) => {
+      if (typeof photo === "string") return true;
+      return photo && typeof photo === "object";
+    })
+    .map((photo) => {
+      if (typeof photo === "string") {
+        return {
+          url: photo,
+          filters: { ...DEFAULT_FILTERS },
+          timestamp: Date.now(),
+        };
+      }
+      return photo as StoredPhoto;
+    });
 };
 
 // Save photos to localStorage
