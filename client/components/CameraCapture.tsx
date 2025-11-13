@@ -46,36 +46,38 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onPhotoCapture }) => {
   }, [countdown, isCountdownActive]);
 
   const capturePhoto = useCallback(async () => {
-    const imageSrc = webcamRef.current?.getScreenshot();
+    let imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
       setCameraFlash(true);
       setTimeout(() => setCameraFlash(false), 200);
 
-      setCapturedImage(imageSrc);
+      // Apply filters to the captured image
+      const filteredImage = await applyFiltersToImage(imageSrc, filters);
+      setCapturedImage(filteredImage);
 
       // Try to upload to Supabase
       try {
         setIsUploading(true);
-        const blob = await fetch(imageSrc).then((res) => res.blob());
+        const blob = await fetch(filteredImage).then((res) => res.blob());
         const filename = `photo_${Date.now()}.jpg`;
         const uploadedUrl = await uploadPhoto(blob, filename);
 
         if (uploadedUrl) {
-          onPhotoCapture(uploadedUrl);
+          onPhotoCapture(uploadedUrl, filters);
         } else {
           // Fallback: use local data URL
-          onPhotoCapture(imageSrc);
+          onPhotoCapture(filteredImage, filters);
         }
       } catch (error) {
         console.error("Error uploading photo:", error);
         // Fallback: use local data URL
-        onPhotoCapture(imageSrc);
+        onPhotoCapture(filteredImage, filters);
       } finally {
         setIsUploading(false);
         setTimeout(() => setCapturedImage(null), 2000);
       }
     }
-  }, [onPhotoCapture]);
+  }, [onPhotoCapture, filters]);
 
   const startCountdown = (duration: number) => {
     setCountdown(duration);
