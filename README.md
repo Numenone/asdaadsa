@@ -164,14 +164,35 @@ pnpm build
 - Switch between front and rear cameras
 - Shows upload progress indicator
 
+### Advanced Photo Filters
+- **12 Professional Filters**:
+  - Negativo (inverted colors)
+  - Opacidade (transparency control)
+  - Saturação (color intensity)
+  - Brilho (brightness)
+  - Contraste (contrast)
+  - Desfoque (blur effect)
+  - Escala de Cinza (black & white)
+  - Sepia (vintage brown tone)
+  - Vermelho, Verde, Azul, Amarelo (color channels)
+- Real-time preview while adjusting
+- Individual sliders for each filter (0-100%)
+- Toggle filters on/off instantly
+- Combine multiple filters
+- Filters saved permanently with image
+- One-click reset to default values
+
+See [FILTERS_GUIDE.md](./FILTERS_GUIDE.md) for detailed filter examples and combinations.
+
 ### Photo Gallery
 - Auto-scrolling carousel every 4 seconds
 - Click thumbnails to select photos
-- Download individual photos
+- Download individual photos with applied filters
 - Delete photos (local and cloud)
 - Photo counter display
 - Smooth animations and transitions
 - Responsive thumbnail layout
+- Filters visible in gallery preview
 
 ### Responsive Design
 - Mobile-first approach
