@@ -27,8 +27,12 @@ export default function Index() {
         setError(null);
         const photoUrls = await listPhotos();
 
-        // Convert URLs to StoredPhoto objects
-        const storedPhotos: StoredPhoto[] = photoUrls.map((url) => ({
+        // Filter out undefined/null URLs and convert to StoredPhoto objects
+        const validUrls = Array.isArray(photoUrls)
+          ? photoUrls.filter((url) => url && typeof url === "string")
+          : [];
+
+        const storedPhotos: StoredPhoto[] = validUrls.map((url) => ({
           url,
           filters: {
             negativo: 0,
@@ -47,13 +51,13 @@ export default function Index() {
           timestamp: Date.now(),
         }));
 
-        setPhotos(storedPhotos);
+        setPhotos(storedPhotos.length > 0 ? storedPhotos : []);
       } catch (err) {
         console.error("Error loading photos:", err);
         setError("Failed to load photos. Using local storage only.");
         // Try loading from localStorage as fallback
         const savedPhotos = loadPhotosFromStorage();
-        setPhotos(savedPhotos);
+        setPhotos(Array.isArray(savedPhotos) ? savedPhotos : []);
       } finally {
         setIsLoading(false);
       }
