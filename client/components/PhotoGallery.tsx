@@ -157,7 +157,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      downloadPhoto(photo);
+                      downloadPhoto(photo.url);
                     }}
                     className="p-2 bg-white/90 hover:bg-white text-gray-900 rounded-full transition-all duration-200"
                     title="Download"
