@@ -88,9 +88,12 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
             className="aspect-video w-full relative overflow-hidden"
           >
             <img
-              src={displayPhotos[currentIndex]}
+              src={displayPhotos[currentIndex].url}
               alt={`Gallery photo ${currentIndex + 1}`}
               className="w-full h-full object-cover"
+              style={{
+                filter: generateCSSFilters(displayPhotos[currentIndex].filters),
+              }}
             />
 
             {/* Photo Counter */}
