@@ -73,7 +73,12 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
     onDelete?.(index);
   };
 
-  if (displayPhotos.length === 0) {
+  // Filter out invalid photos
+  const validPhotos = displayPhotos.filter(
+    (photo) => photo && photo.url && typeof photo.url === "string"
+  );
+
+  if (validPhotos.length === 0) {
     return (
       <div className="w-full bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 text-center">
         <div className="text-gray-400 dark:text-gray-500">
@@ -84,49 +89,55 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
     );
   }
 
+  // Ensure currentIndex is within bounds
+  const safeIndex = Math.min(currentIndex, validPhotos.length - 1);
+  const currentPhoto = validPhotos[safeIndex];
+
   return (
     <div className="w-full">
       {/* Main Display */}
       <div className="bg-gradient-to-b from-gray-950 to-gray-900 rounded-2xl overflow-hidden shadow-2xl mb-6">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.5 }}
-            className="aspect-video w-full relative overflow-hidden"
-          >
-            <img
-              src={displayPhotos[currentIndex].url}
-              alt={`Gallery photo ${currentIndex + 1}`}
-              className="w-full h-full object-cover"
-              style={{
-                filter: generateCSSFilters(displayPhotos[currentIndex].filters),
-              }}
-            />
-
-            {/* Photo Counter */}
-            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm font-medium">
-              {currentIndex + 1} / {displayPhotos.length}
-            </div>
-
-            {/* Action Buttons Overlay */}
+          {currentPhoto && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-4"
+              key={safeIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.5 }}
+              className="aspect-video w-full relative overflow-hidden"
             >
-              <button
-                onClick={() => downloadPhoto(displayPhotos[currentIndex].url)}
-                className="p-3 bg-white/90 hover:bg-white text-gray-900 rounded-full transition-all duration-200 hover:scale-110"
-                title="Download photo"
+              <img
+                src={currentPhoto.url}
+                alt={`Gallery photo ${safeIndex + 1}`}
+                className="w-full h-full object-cover"
+                style={{
+                  filter: generateCSSFilters(currentPhoto.filters),
+                }}
+              />
+
+              {/* Photo Counter */}
+              <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm font-medium">
+                {safeIndex + 1} / {validPhotos.length}
+              </div>
+
+              {/* Action Buttons Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-4"
               >
-                <Download className="w-6 h-6" />
-              </button>
+                <button
+                  onClick={() => downloadPhoto(currentPhoto.url)}
+                  className="p-3 bg-white/90 hover:bg-white text-gray-900 rounded-full transition-all duration-200 hover:scale-110"
+                  title="Download photo"
+                >
+                  <Download className="w-6 h-6" />
+                </button>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          )}
         </AnimatePresence>
       </div>
 
@@ -137,7 +148,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
           className="flex gap-3 overflow-x-auto scroll-smooth pb-2 px-2"
           style={{ scrollBehavior: "smooth" }}
         >
-          {displayPhotos.map((photo, index) => (
+          {validPhotos.map((photo, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -147,7 +158,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
             >
               <div
                 className={`relative rounded-lg overflow-hidden cursor-pointer transition-all duration-300 border-2 ${
-                  index === currentIndex
+                  index === safeIndex
                     ? "border-blue-500 shadow-lg scale-105"
                     : "border-transparent hover:border-gray-400 dark:hover:border-gray-600"
                 }`}
@@ -200,11 +211,11 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
 
       {/* Progress Indicator */}
       <div className="mt-4 flex justify-center gap-1">
-        {displayPhotos.map((_, index) => (
+        {validPhotos.map((_, index) => (
           <motion.div
             key={index}
             className={`h-1 rounded-full transition-all duration-300 ${
-              index === currentIndex
+              index === safeIndex
                 ? "bg-blue-500 w-8"
                 : "bg-gray-300 dark:bg-gray-600 w-2"
             }`}
