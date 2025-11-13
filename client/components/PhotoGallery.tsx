@@ -109,7 +109,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
               className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-4"
             >
               <button
-                onClick={() => downloadPhoto(displayPhotos[currentIndex])}
+                onClick={() => downloadPhoto(displayPhotos[currentIndex].url)}
                 className="p-3 bg-white/90 hover:bg-white text-gray-900 rounded-full transition-all duration-200 hover:scale-110"
                 title="Download photo"
               >
