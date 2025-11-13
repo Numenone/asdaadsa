@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Download, Trash2 } from "lucide-react";
+import { StoredPhoto } from "@/lib/photoStorage";
+import { generateCSSFilters } from "@/lib/filters";
 
 interface PhotoGalleryProps {
-  photos: string[];
+  photos: StoredPhoto[];
   onDelete?: (index: number) => void;
 }
 
 const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos, onDelete }) => {
-  const [displayPhotos, setDisplayPhotos] = useState<string[]>(photos);
+  const [displayPhotos, setDisplayPhotos] = useState<StoredPhoto[]>(photos);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
