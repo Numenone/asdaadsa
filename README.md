@@ -7,8 +7,14 @@ A beautiful, modern web application for capturing photos with your webcam, featu
 - **Real-time Webcam Capture**: High-quality photo capture directly from your webcam
 - **Countdown Timer**: 3-second and 5-second countdown options before capture
 - **Camera Flash Animation**: Realistic camera flash effect on photo capture
+- **Advanced Photo Filters**: 12 professional filters with real-time preview:
+  - Negativo, Opacidade, Saturação, Brilho, Contraste
+  - Desfoque, Escala de Cinza, Sepia
+  - Canais de cor: Vermelho, Verde, Azul, Amarelo
+  - Combine múltiplos filtros simultaneamente
+  - Todos os filtros salvos com a imagem
 - **Photo Gallery**: Auto-scrolling gallery with smooth animations
-- **Download Photos**: Download any photo from the gallery
+- **Download Photos**: Download any photo from the gallery with applied filters
 - **Camera Flip**: Switch between front and rear cameras
 - **Cloud Storage**: Seamless integration with Supabase for persistent photo storage
 - **Responsive Design**: Beautiful, modern UI that works on desktop, tablet, and mobile
