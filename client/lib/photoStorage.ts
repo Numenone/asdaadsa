@@ -39,7 +39,11 @@ export const loadPhotosFromStorage = (): StoredPhoto[] => {
       if (typeof parsed[0] === "string") {
         return migratePhotos(parsed);
       }
-      return parsed;
+      // Filter out invalid items
+      return parsed.filter(
+        (item): item is StoredPhoto =>
+          item && typeof item === "object" && typeof item.url === "string"
+      );
     }
     return [];
   } catch (error) {
