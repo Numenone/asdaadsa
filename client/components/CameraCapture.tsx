@@ -111,6 +111,9 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onPhotoCapture }) => {
             height: { ideal: 1080 },
           }}
           className="w-full h-full object-cover"
+          style={{
+            filter: generateCSSFilters(filters),
+          }}
         />
 
         {/* Camera Flash Effect */}
